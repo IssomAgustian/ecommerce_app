@@ -9,102 +9,125 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[50],
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF8B4513),
-        title: const Text(
-          'Profil Saya',
-          style: TextStyle(color: Colors.white),
-        ),
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.settings, color: Colors.white),
-            onPressed: () {},
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
+      backgroundColor: const Color(0xFF8B4513),
+      body: SafeArea(
         child: Column(
           children: [
-            // Profile Header
+            // Header
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'Profil Saya',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.settings, color: Colors.white),
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Pengaturan akan segera hadir'),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+
+            // Profile Card
             Container(
-              padding: const EdgeInsets.all(24),
-              decoration: const BoxDecoration(
-                color: Color(0xFF8B4513),
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(30),
-                  bottomRight: Radius.circular(30),
-                ),
+              margin: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    spreadRadius: 2,
+                    blurRadius: 10,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
               ),
               child: Column(
                 children: [
-                  CircleAvatar(
-                    radius: 50,
-                    backgroundColor: Colors.white,
-                    child: ClipOval(
-                      child: Image.asset(
-                        'assets/images/profile.jpg',
-                        width: 100,
-                        height: 100,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) {
-                          return const Icon(
-                            Icons.person,
-                            size: 50,
-                            color: Color(0xFF8B4513),
-                          );
-                        },
+                  // Profile Image
+                  Stack(
+                    children: [
+                      CircleAvatar(
+                        radius: 50,
+                        backgroundColor: Colors.grey[300],
+                        child: ClipOval(
+                          child: Image.asset(
+                            'assets/images/profile.jpg',
+                            width: 100,
+                            height: 100,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                              return const Icon(
+                                Icons.person,
+                                size: 50,
+                                color: Colors.white,
+                              );
+                            },
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                   const SizedBox(height: 16),
+                  // Name
                   const Text(
                     'Sarah Wijaya',
                     style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
+                      fontSize: 22,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(height: 4),
+                  // Email
                   Text(
                     'sarah.wijaya@email.com',
                     style: TextStyle(
-                      color: Colors.white.withOpacity(0.9),
                       fontSize: 14,
+                      color: Colors.grey[600],
                     ),
                   ),
                   const SizedBox(height: 20),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 8,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.edit, color: Colors.white, size: 16),
-                        SizedBox(width: 8),
-                        Text(
-                          'Edit Profil',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                          ),
+                  // Edit Profile Button
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Edit profil akan segera hadir'),
                         ),
-                      ],
+                      );
+                    },
+                    icon: const Icon(Icons.edit, size: 18),
+                    label: const Text('Edit Profil'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF8B4513),
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 24,
+                        vertical: 12,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 20),
 
             // Stats Cards
             Padding(
@@ -144,109 +167,157 @@ class ProfilePage extends StatelessWidget {
                 },
               ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 16),
 
             // Menu List
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 16),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(15),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.1),
-                    spreadRadius: 1,
-                    blurRadius: 5,
-                    offset: const Offset(0, 3),
+            Expanded(
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
                   ),
-                ],
-              ),
-              child: Column(
-                children: [
-                  _buildMenuItem(
-                    icon: Icons.shopping_bag_outlined,
-                    title: 'Pesanan Saya',
-                    color: const Color(0xFFFFF3E0),
-                    iconColor: Colors.orange,
-                    onTap: () {},
-                  ),
-                  _buildDivider(),
-                  _buildMenuItem(
-                    icon: Icons.location_on_outlined,
-                    title: 'Alamat Saya',
-                    color: const Color(0xFFE3F2FD),
-                    iconColor: Colors.blue,
-                    onTap: () {},
-                  ),
-                  _buildDivider(),
-                  _buildMenuItem(
-                    icon: Icons.lock_outline,
-                    title: 'Ubah Password',
-                    color: const Color(0xFFFCE4EC),
-                    iconColor: Colors.pink,
-                    onTap: () {},
-                  ),
-                  _buildDivider(),
-                  _buildMenuItem(
-                    icon: Icons.help_outline,
-                    title: 'Bantuan',
-                    color: const Color(0xFFE8F5E9),
-                    iconColor: Colors.green,
-                    onTap: () {},
-                  ),
-                  _buildDivider(),
-                  _buildMenuItem(
-                    icon: Icons.info_outline,
-                    title: 'Tentang Aplikasi',
-                    color: const Color(0xFFEDE7F6),
-                    iconColor: Colors.purple,
-                    onTap: () {},
-                  ),
-                  _buildDivider(),
-                  _buildMenuItem(
-                    icon: Icons.logout,
-                    title: 'Keluar',
-                    color: const Color(0xFFFFEBEE),
-                    iconColor: Colors.red,
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          title: const Text('Keluar'),
-                          content: const Text('Apakah Anda yakin ingin keluar?'),
-                          actions: [
-                            TextButton(
-                              onPressed: () => Navigator.pop(context),
-                              child: const Text('Batal'),
-                            ),
-                            ElevatedButton(
-                              onPressed: () {
-                                // Clear cart and wishlist
-                                Provider.of<CartProvider>(context,
-                                        listen: false)
-                                    .clearCart();
-                                Navigator.pop(context);
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Berhasil keluar'),
-                                    backgroundColor: Colors.green,
+                ),
+                child: ListView(
+                  padding: const EdgeInsets.only(top: 20),
+                  children: [
+                    _buildMenuItem(
+                      icon: Icons.receipt_long,
+                      title: 'Pesanan Saya',
+                      color: const Color(0xFFFFF3E0),
+                      iconColor: Colors.orange,
+                      onTap: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Fitur pesanan akan segera hadir'),
+                          ),
+                        );
+                      },
+                    ),
+                    _buildMenuItem(
+                      icon: Icons.location_on,
+                      title: 'Alamat Saya',
+                      color: const Color(0xFFE3F2FD),
+                      iconColor: Colors.blue,
+                      onTap: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Fitur alamat akan segera hadir'),
+                          ),
+                        );
+                      },
+                    ),
+                    _buildMenuItem(
+                      icon: Icons.lock,
+                      title: 'Ubah Password',
+                      color: const Color(0xFFFCE4EC),
+                      iconColor: Colors.pink,
+                      onTap: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Fitur ubah password akan segera hadir'),
+                          ),
+                        );
+                      },
+                    ),
+                    _buildMenuItem(
+                      icon: Icons.help,
+                      title: 'Bantuan',
+                      color: const Color(0xFFE8F5E9),
+                      iconColor: Colors.green,
+                      onTap: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Fitur bantuan akan segera hadir'),
+                          ),
+                        );
+                      },
+                    ),
+                    _buildMenuItem(
+                      icon: Icons.info,
+                      title: 'Tentang Aplikasi',
+                      color: const Color(0xFFEDE7F6),
+                      iconColor: Colors.purple,
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: const Text('Tentang Aplikasi'),
+                            content: const Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'E-Commerce Shoes App',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
                                   ),
-                                );
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.red,
-                              ),
-                              child: const Text('Keluar'),
+                                ),
+                                SizedBox(height: 8),
+                                Text('Versi: 1.0.0'),
+                                SizedBox(height: 4),
+                                Text('Dibuat dengan Flutter'),
+                                SizedBox(height: 4),
+                                Text('© 2024 All Rights Reserved'),
+                              ],
                             ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-                ],
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: const Text('Tutup'),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                    _buildMenuItem(
+                      icon: Icons.logout,
+                      title: 'Keluar',
+                      color: const Color(0xFFFFEBEE),
+                      iconColor: Colors.red,
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: const Text('Keluar'),
+                            content:
+                                const Text('Apakah Anda yakin ingin keluar?'),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: const Text('Batal'),
+                              ),
+                              ElevatedButton(
+                                onPressed: () {
+                                  Provider.of<CartProvider>(context,
+                                          listen: false)
+                                      .clearCart();
+                                  Navigator.pop(context);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('Berhasil keluar'),
+                                      backgroundColor: Colors.green,
+                                    ),
+                                  );
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.red,
+                                  foregroundColor: Colors.white,
+                                ),
+                                child: const Text('Keluar'),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
-            const SizedBox(height: 24),
           ],
         ),
       ),
@@ -260,13 +331,13 @@ class ProfilePage extends StatelessWidget {
     required Color color,
   }) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(vertical: 16),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(15),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
+            color: Colors.black.withOpacity(0.05),
             spreadRadius: 1,
             blurRadius: 5,
             offset: const Offset(0, 3),
@@ -287,7 +358,7 @@ class ProfilePage extends StatelessWidget {
           Text(
             value,
             style: const TextStyle(
-              fontSize: 20,
+              fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -295,7 +366,7 @@ class ProfilePage extends StatelessWidget {
           Text(
             title,
             style: TextStyle(
-              fontSize: 12,
+              fontSize: 11,
               color: Colors.grey[600],
             ),
           ),
@@ -313,11 +384,12 @@ class ProfilePage extends StatelessWidget {
   }) {
     return ListTile(
       onTap: onTap,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
       leading: Container(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           color: color,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(12),
         ),
         child: Icon(icon, color: iconColor, size: 24),
       ),
@@ -329,16 +401,6 @@ class ProfilePage extends StatelessWidget {
         ),
       ),
       trailing: const Icon(Icons.chevron_right, color: Colors.grey),
-    );
-  }
-
-  Widget _buildDivider() {
-    return Divider(
-      height: 1,
-      thickness: 1,
-      indent: 16,
-      endIndent: 16,
-      color: Colors.grey[200],
     );
   }
 }

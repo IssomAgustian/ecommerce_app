@@ -92,4 +92,28 @@ final List<Product> dummyProducts = [
     colors: ['Putih/Biru', 'Hitam/Merah', 'Abu-abu'],
     sizes: [38, 39, 40, 41, 42, 43, 44, 45],
   ),
+    Product(
+    id: '7',
+    name: 'Nike Air Max 270 React',
+    image: 'assets/images/produk1.jpg',
+    price: 1899000,
+    rating: 4.5,
+    reviewCount: 12,
+    description:
+        'Nike Air Max 270 React menggabungkan kenyamanan legendaris Air Max dengan desain yang stylish dan modern. Sepatu ini dilengkapi dengan unit Air Max 270 di bagian tumit yang memberikan kenyamanan maksimal sepanjang hari. Cocok untuk aktivitas sehari-hari maupun olahraga ringan.',
+    colors: ['Putih/Hitam', 'Hitam/Merah', 'Abu-abu/Biru'],
+    sizes: [38, 40, 41, 42, 43, 44, 45],
+  ),
+  Product(
+    id: '8',
+    name: 'Converse Chuck Taylor All Star',
+    image: 'assets/images/produk2.jpg',
+    price: 799000,
+    rating: 4.8,
+    reviewCount: 45,
+    description:
+        'Converse Chuck Taylor All Star adalah sepatu klasik yang tidak lekang oleh waktu. Dengan desain ikonik dan kenyamanan yang telah terbukti selama puluhan tahun.',
+    colors: ['Merah', 'Putih', 'Hitam'],
+    sizes: [38, 40, 41, 42, 43, 44],
+  ),
 ];

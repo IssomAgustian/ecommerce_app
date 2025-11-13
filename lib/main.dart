@@ -26,7 +26,9 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.white,
           colorScheme: ColorScheme.fromSeed(
             seedColor: const Color(0xFF8B4513),
-          ).copyWith(primary: const Color(0xFF8B4513)),
+          ).copyWith(
+            primary: const Color(0xFF8B4513),
+          ),
           appBarTheme: const AppBarTheme(
             elevation: 0,
             centerTitle: true,
@@ -38,6 +40,7 @@ class MyApp extends StatelessWidget {
             unselectedItemColor: Colors.grey,
             showUnselectedLabels: true,
             type: BottomNavigationBarType.fixed,
+            elevation: 8,
           ),
         ),
         home: const HomePage(),
