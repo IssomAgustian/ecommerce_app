@@ -132,6 +132,13 @@ class _HomePageState extends State<HomePage> {
 class HomeContent extends StatelessWidget {
   const HomeContent({super.key});
 
+  int _getCrossAxisCount(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    if (width > 1200) return 4;
+    if (width > 800) return 3;
+    return 2;
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -174,10 +181,12 @@ class HomeContent extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      IconButton(
-                        icon: const Icon(Icons.search, color: Colors.white),
-                        onPressed: () {},
-                      ),
+                      // Search Icon
+                      // IconButton(
+                      //   icon: const Icon(Icons.search, color: Colors.white),
+                      //   onPressed: () {},
+                      // ),
+                      // Notification Icon with Badge
                       Stack(
                         children: [
                           IconButton(
@@ -198,6 +207,53 @@ class HomeContent extends StatelessWidget {
                             ),
                           ),
                         ],
+                      ),
+                      // Cart Icon with Badge
+                      Consumer<CartProvider>(
+                        builder: (context, cart, child) {
+                          return Stack(
+                            children: [
+                              IconButton(
+                                icon: const Icon(Icons.shopping_cart,
+                                    color: Colors.white),
+                                onPressed: () {
+                                  // Navigate to cart
+                                  Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                      builder: (context) => const HomePage(),
+                                    ),
+                                  );
+                                  // Change bottom nav to cart
+                                },
+                              ),
+                              if (cart.itemCount > 0)
+                                Positioned(
+                                  right: 8,
+                                  top: 8,
+                                  child: Container(
+                                    padding: const EdgeInsets.all(4),
+                                    decoration: const BoxDecoration(
+                                      color: Colors.red,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    constraints: const BoxConstraints(
+                                      minWidth: 16,
+                                      minHeight: 16,
+                                    ),
+                                    child: Text(
+                                      '${cart.itemCount}',
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          );
+                        },
                       ),
                     ],
                   ),
@@ -266,23 +322,27 @@ class HomeContent extends StatelessWidget {
             ),
             const SizedBox(height: 12),
 
-            // Products Grid
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: GridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 0.75,
-                  crossAxisSpacing: 12,
-                  mainAxisSpacing: 12,
-                ),
-                itemCount: dummyProducts.length,
-                itemBuilder: (context, index) {
-                  return ProductCard(product: dummyProducts[index]);
-                },
-              ),
+            // Products Grid - RESPONSIVE
+            LayoutBuilder(
+              builder: (context, constraints) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: _getCrossAxisCount(context),
+                      childAspectRatio: 0.7,
+                      crossAxisSpacing: 12,
+                      mainAxisSpacing: 12,
+                    ),
+                    itemCount: dummyProducts.length,
+                    itemBuilder: (context, index) {
+                      return ProductCard(product: dummyProducts[index]);
+                    },
+                  ),
+                );
+              },
             ),
             const SizedBox(height: 20),
           ],

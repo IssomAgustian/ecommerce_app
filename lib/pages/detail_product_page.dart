@@ -384,8 +384,15 @@ class _DetailProductPageState extends State<DetailProductPage> {
         child: SafeArea(
           child: Row(
             children: [
-              Expanded(
-                child: ElevatedButton(
+              // Icon Button - Masukkan Keranjang
+              Container(
+                width: 45,
+                height: 45,
+                decoration: BoxDecoration(
+                  border: Border.all(color: const Color(0xFF8B4513), width: 2),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: IconButton(
                   onPressed: () {
                     if (selectedColor != null && selectedSize != null) {
                       final cartProvider =
@@ -407,6 +414,68 @@ class _DetailProductPageState extends State<DetailProductPage> {
                       );
                     }
                   },
+                  icon: const Icon(
+                    Icons.shopping_cart,
+                    color: Color(0xFF8B4513),
+                    size: 28,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              // Full Button - Beli Sekarang
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (selectedColor != null && selectedSize != null) {
+                      // Add to cart first
+                      final cartProvider =
+                          Provider.of<CartProvider>(context, listen: false);
+                      for (int i = 0; i < quantity; i++) {
+                        cartProvider.addItem(
+                          widget.product,
+                          selectedColor!,
+                          selectedSize!,
+                        );
+                      }
+                      // Show confirmation
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: const Text('Beli Sekarang'),
+                          content: Text(
+                              'Lanjutkan ke pembayaran untuk ${widget.product.name}?'),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: const Text('Batal'),
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Menuju halaman pembayaran...'),
+                                    backgroundColor: Colors.green,
+                                  ),
+                                );
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFF8B4513),
+                              ),
+                              child: const Text('Lanjutkan'),
+                            ),
+                          ],
+                        ),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Pilih warna dan ukuran terlebih dahulu'),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                    }
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF8B4513),
                     padding: const EdgeInsets.symmetric(vertical: 16),
@@ -415,37 +484,13 @@ class _DetailProductPageState extends State<DetailProductPage> {
                     ),
                   ),
                   child: const Text(
-                    'Masukkan Keranjang',
+                    'Beli Sekarang',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
                   ),
-                ),
-              ),
-              const SizedBox(width: 12),
-              ElevatedButton(
-                onPressed: () {
-                  // Beli sekarang
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Fitur beli sekarang akan segera hadir'),
-                      duration: Duration(seconds: 2),
-                    ),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  padding: const EdgeInsets.all(16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    side: const BorderSide(color: Color(0xFF8B4513)),
-                  ),
-                ),
-                child: const Icon(
-                  Icons.shopping_bag_outlined,
-                  color: Color(0xFF8B4513),
                 ),
               ),
             ],
